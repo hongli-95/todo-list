@@ -1,0 +1,36 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+table {
+    border: solid 1px black;
+    margin: 20px auto;
+}
+
+tr {
+    padding: 10px;
+}
+
+td {
+    padding: 10px 50px
+}
+
+#event-list-app {
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+}
+
+#event-list-app__add-button {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.5rem;
+    background-color: royalblue;
+    color: white;
+    cursor: pointer;
+}
