@@ -34,3 +34,30 @@ td {
     color: white;
     cursor: pointer;
 }
+
+tbody > tr {
+    background-color: antiquewhite;
+}
+
+.event-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.event-actions > button {
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    font-weight: 600;
+}
+
+.edit-button {
+    background-color: greenyellow;
+}
+
+.delete-button {
+    background-color: red;
+}
