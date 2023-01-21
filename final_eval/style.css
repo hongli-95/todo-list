@@ -6,9 +6,20 @@
     box-sizing: border-box;
 }
 
+body {
+    background-color: skyblue;
+}
+
 table {
-    border: solid 1px black;
+    border: solid 3px black;
     margin: 20px auto;
+    border-radius: 10px;
+    border-spacing: 0;
+    width: 50%;
+}
+
+thead {
+    font-size: 2rem;
 }
 
 tr {
@@ -16,7 +27,8 @@ tr {
 }
 
 td {
-    padding: 10px 50px
+    padding: 20px 50px;
+    font-size: 1.3rem;
 }
 
 #event-list-app {
@@ -54,10 +66,17 @@ tbody > tr {
     font-weight: 600;
 }
 
-.edit-button {
+.edit-button, .post-button {
     background-color: greenyellow;
+    cursor: pointer;
 }
 
-.delete-button {
+.delete-button, .cancel-button {
     background-color: red;
+    cursor: pointer;
+}
+
+input {
+    padding: 5px;
+    border-radius: 5px;
 }

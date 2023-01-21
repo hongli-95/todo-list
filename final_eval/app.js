@@ -26,7 +26,7 @@ const API = (() => {
 
   const updateEvent = (id, updatedContent) => {
     return fetch(`${URL}/${id}`, {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
@@ -157,14 +157,14 @@ class EventListView {
 
     // create a div for action buttons
     const newEventActions = document.createElement("div");
-    newEventActions.classList.add("new-event-actions");
+    newEventActions.classList.add("event-actions");
 
     // create action buttons
     const postButton = document.createElement("button");
-    postButton.textContent = "+";
+    postButton.textContent = "Post";
     postButton.classList.add("post-button");
     const cancelButton = document.createElement("button");
-    cancelButton.textContent = "X";
+    cancelButton.textContent = "Cancel";
     cancelButton.classList.add("cancel-button");
 
     // create input
@@ -203,18 +203,12 @@ class EventListController {
     this.renderContent();
     this.setupAddEvent();
     this.setupDeleteButton();
+    this.setupEditButton();
   }
 
   renderContent() {
     this.model.fetchEvents().then((events) => {
       this.view.renderEvents(events);
-    });
-  }
-
-  setupActionsEvents() {
-    this.view.tableBody.addEventListener("click", (e) => {
-      if (e.target.classList.contains("delete-button")) {
-      }
     });
   }
 
@@ -245,6 +239,9 @@ class EventListController {
             this.renderContent();
           });
       }
+      if (e.target.classList.contains("cancel-button")) {
+        this.renderContent();
+      }
     });
   }
 
@@ -267,41 +264,50 @@ class EventListController {
 
         const newNameInput = document.createElement("input");
         newNameInput.setAttribute("type", "text");
-        newNameInput.value = eventRow.querySelector("event-name").textContent;
+        newNameInput.value = eventRow.querySelector(".event-name").textContent;
 
         const newStartDateInput = document.createElement("input");
         newStartDateInput.setAttribute("type", "date");
         newStartDateInput.value =
-          eventRow.querySelector("event-startDate").value;
+          eventRow.querySelector(".event-startDate").value;
 
         const newEndDateInput = document.createElement("input");
         newEndDateInput.setAttribute("type", "date");
-        newEndDateInput.value = eventRow.querySelector("event-endDate").value;
+        newEndDateInput.value = eventRow.querySelector(".event-endDate").value;
 
         const newButton = document.createElement("button");
         newButton.textContent = "Cancel";
-
-        eventRow.querySelector("event-name").replaceWith(newNameInput);
-        eventRow
-          .querySelector("event-startDate")
-          .replaceWith(newStartDateInput);
-        eventRow.querySelector("event-EndDate").replaceWith(newEndDateInput);
-        eventRow.querySelector("delete-button").replaceWith(newButton);
-
-        e.target.textContent = "Done";
-
-        const updatedContent = {
-          eventName: eventName,
-          startDate: eventStartDate,
-          endDate: eventEndDate,
-        };
-
-        this.model.updateEvent(eventId, updatedContent).then((data) => {
+        newButton.addEventListener("click", (x) => {
           this.renderContent();
         });
+
+        eventRow.querySelector(".event-name").replaceWith(newNameInput);
+        eventRow
+          .querySelector(".event-startDate")
+          .replaceWith(newStartDateInput);
+        eventRow.querySelector(".event-endDate").replaceWith(newEndDateInput);
+        eventRow.querySelector(".delete-button").replaceWith(newButton);
+
+        // save button after edit is clicked
+        const saveButton = document.createElement("button");
+        saveButton.textContent = "Save";
+        saveButton.addEventListener("click", (y) => {
+          const updatedContent = {
+            eventName: newNameInput.value,
+            startDate: newStartDateInput.value,
+            endDate: newEndDateInput.value,
+          };
+          this.model.updateEvent(eventId, updatedContent).then((data) => {
+            this.renderContent();
+          });
+        });
+        e.target.parentNode.append(saveButton);
+        e.target.style.display = "none";
       }
     });
   }
+
+  // cancel button just render the entire list again
 }
 
 const eventListView = new EventListView();
