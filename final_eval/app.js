@@ -262,34 +262,49 @@ class EventListController {
         const eventRow = e.target.parentNode.parentNode;
         const eventId = eventRow.getAttribute("id");
 
+        const newNameInputCell = document.createElement("td");
         const newNameInput = document.createElement("input");
         newNameInput.setAttribute("type", "text");
         newNameInput.value = eventRow.querySelector(".event-name").textContent;
 
+        const newStartDateInputCell = document.createElement("td");
         const newStartDateInput = document.createElement("input");
         newStartDateInput.setAttribute("type", "date");
         newStartDateInput.value =
           eventRow.querySelector(".event-startDate").value;
 
+        const newEndDateInputCell = document.createElement("td");
         const newEndDateInput = document.createElement("input");
         newEndDateInput.setAttribute("type", "date");
         newEndDateInput.value = eventRow.querySelector(".event-endDate").value;
 
+        const buttonContainer = document.createElement("div");
+        buttonContainer.classList.add("event-actions");
         const newButton = document.createElement("button");
+        newButton.classList.add("cancel-button");
         newButton.textContent = "Cancel";
         newButton.addEventListener("click", (x) => {
           this.renderContent();
         });
 
-        eventRow.querySelector(".event-name").replaceWith(newNameInput);
+        newNameInputCell.append(newNameInput);
+        newStartDateInputCell.append(newStartDateInput);
+        newEndDateInputCell.append(newEndDateInput);
+        buttonContainer.append(newButton);
+
+        eventRow.querySelector(".event-name").replaceWith(newNameInputCell);
         eventRow
           .querySelector(".event-startDate")
-          .replaceWith(newStartDateInput);
-        eventRow.querySelector(".event-endDate").replaceWith(newEndDateInput);
+          .replaceWith(newStartDateInputCell);
+        eventRow
+          .querySelector(".event-endDate")
+          .replaceWith(newEndDateInputCell);
         eventRow.querySelector(".delete-button").replaceWith(newButton);
 
         // save button after edit is clicked
         const saveButton = document.createElement("button");
+        saveButton.classList.add("save-button");
+        buttonContainer.append(saveButton);
         saveButton.textContent = "Save";
         saveButton.addEventListener("click", (y) => {
           const updatedContent = {

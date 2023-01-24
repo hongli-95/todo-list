@@ -66,7 +66,7 @@ tbody > tr {
     font-weight: 600;
 }
 
-.edit-button, .post-button {
+.edit-button, .post-button, .save-button {
     background-color: greenyellow;
     cursor: pointer;
 }
